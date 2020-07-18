@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Crud Estado</title>
+    </h:head>
+    <h:body>
+        Mantenedor Estados
+        <h:form id="formulario1">
+        <p:outputLabel value="Nombre" for="nombre"/>
+        <p:inputText value="#{estadoMB.estado.nombre}" id="nombre"/><br/>    
+        <p:commandButton value="Registrar" actionListener="#{estadoMB.registrar()}" update="formulario1"/>
+        <p:outputLabel value="#{estadoMB.mensaje}" id="mensaje" />
+        <p:dataTable id="tabla" value="#{estadoMB.estados}" var="estado">
+                <p:column headerText="ID">
+                    <p:outputLabel value="#{estado.id}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{estado.nombre}"/>
+                </p:column>
+                <p:column headerText="Modificar">
+                    <p:commandLink value="Modificar" actionListener="#{estadoMB.obtenerEstado(estado)}" oncomplete="PF('datosM').show();" update=":dlActualizar" />
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandLink value="Eliminar" actionListener="#{estadoMB.obtenerEstado(estado)}" oncomplete="PF('datosE').show();" update=":dlEliminar" />
+                </p:column>
+        </p:dataTable>
+        </h:form>
+         <p:dialog header="Actualizar" widgetVar="datosM" id="dlActualizar">
+            <h:form>
+                <p:outputLabel value="ID" for="id"/>
+                <p:inputText value="#{estadoMB.estado.id}" id="id" readonly="true"/><br/>
+                <p:outputLabel value="Nombre" for="nombre"/>
+                <p:inputText value="#{estadoMB.estado.nombre}" id="nombre"/><br/>
+            <p:commandButton value="Modificar" actionListener="#{estadoMB.modificar()}" update=":formulario1"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Eliminar" widgetVar="datosE" id="dlEliminar">
+            <h:form>
+                <p:outputLabel value="ID" for="id"/>
+                <p:inputText value="#{estadoMB.estado.id}" id="id" readonly="true"/><br/>
+                <p:outputLabel value="Nombre" for="nombre"/>
+                <p:inputText value="#{estadoMB.estado.nombre}" id="nombre" readonly="true"/><br/>
+            <p:commandButton value="Eliminar" actionListener="#{estadoMB.eliminar()}" update=":formulario1"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+
